@@ -1,8 +1,8 @@
-// AddProperty.jsx
 import React, { useState } from "react";
-import { addBlock } from "../api/blockchain";
 import { useNavigate } from "react-router-dom";
-import { encryptData } from "../utils/encryption";  // Import encryption function
+import { addBlock } from "../api/blockchain";
+import { encryptData } from "../utils/encryption"; // Your encryption logic
+import "./Addproperty.css"; // Importing the CSS
 
 function AddProperty() {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ function AddProperty() {
     owner: "",
     propertyId: "",
     area: "",
-    location: ""
+    location: "",
   });
 
   const handleChange = (e) => {
@@ -20,24 +20,21 @@ function AddProperty() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Define a secret key for encryption (it can be stored securely in environment variables)
-    const secretKey = "your-secret-key";  // Make sure to keep this secret
-
-    // Encrypt the form data before adding it to the blockchain
+    const secretKey = "your-secret-key"; // Replace with env-secured key in production
     const encryptedData = encryptData(formData, secretKey);
 
     try {
-      // Send the encrypted data to the blockchain
       await addBlock({ encryptedData });
       alert("Property added to blockchain!");
       navigate("/blockchain");
     } catch (error) {
       console.error("Error adding property:", error);
+      alert("Failed to add property.");
     }
   };
 
   return (
-    <div>
+    <div className="add-property-container">
       <h2>Add New Property</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -48,7 +45,6 @@ function AddProperty() {
           onChange={handleChange}
           required
         />
-        <br />
         <input
           type="text"
           name="propertyId"
@@ -57,7 +53,6 @@ function AddProperty() {
           onChange={handleChange}
           required
         />
-        <br />
         <input
           type="text"
           name="area"
@@ -66,7 +61,6 @@ function AddProperty() {
           onChange={handleChange}
           required
         />
-        <br />
         <input
           type="text"
           name="location"
@@ -75,7 +69,6 @@ function AddProperty() {
           onChange={handleChange}
           required
         />
-        <br />
         <button type="submit">Add Property</button>
       </form>
     </div>

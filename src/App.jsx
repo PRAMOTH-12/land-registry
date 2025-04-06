@@ -1,39 +1,25 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-// Auth and Dashboard Components
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
-
-// Land Management Components
 import AddLand from './components/Addland';
 import LandList from './components/LandList';
-
-// Blockchain Related Components
 import BlockchainView from './components/BlockchainView';
 import TransactionForm from './components/TransactionForm';
 import MineBlockButton from './components/MineBlockButton';
-
-// Pages
 import Wallet from './pages/Wallet';
 import Blockchain from './pages/Blockchain';
 import AddProperty from './pages/Addproperty';
-
-// Sidebar
 import Sidebar from './components/Sidebar';
-
-// Private Route
-import PrivateRoute from './components/PrivateRoute'; // 🆕 Import PrivateRoute
-
-// Styling
+import PrivateRoute from './components/PrivateRoute';
 import './App.css';
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Authentication Routes */}
+       
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -55,7 +41,7 @@ function App() {
                     <Route path="/send-transaction" element={<TransactionForm />} />
                     <Route path="/mine-block" element={<MineBlockButton />} />
                     <Route path="/wallet" element={<Wallet />} />
-                    <Route path="/blockchain-explorer" element={<Blockchain />} />
+                    
                     <Route path="/add-property" element={<AddProperty />} />
                   </Routes>
                 </div>

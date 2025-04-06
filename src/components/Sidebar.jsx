@@ -14,7 +14,6 @@ function Sidebar() {
         <li><Link to="/send-transaction"><FaCubes /> Send Transaction</Link></li>
         <li><Link to="/mine-block"><FaCubes /> Mine Block</Link></li>
         <li><Link to="/wallet"><FaWallet /> Wallet</Link></li>
-        <li><Link to="/blockchain-explorer"><FaCubes /> Blockchain Explorer</Link></li>
         <li><Link to="/add-property"><FaPlusCircle /> Add Property</Link></li>
         <li><Link to="/login"><FaUserShield /> Logout</Link></li>
       </ul>

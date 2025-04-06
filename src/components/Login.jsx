@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../firebase'; // Make sure you have your firebase.js ready
+import './Login.css';
+
 
 const Login = () => {
   const navigate = useNavigate();

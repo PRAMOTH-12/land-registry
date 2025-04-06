@@ -1,8 +1,8 @@
-// Blockchain.jsx
 import React, { useEffect, useState } from 'react';
 import { fetchBlocks } from '../api/blockchain';
-import { decryptData } from "../utils/encryption";  // Import the decryptData function
+import { decryptData } from '../utils/encryption';
 import { Link } from 'react-router-dom';
+import './Blockchain.css'; // Import your CSS styles
 
 function Blockchain() {
   const [blocks, setBlocks] = useState([]);
@@ -10,8 +10,8 @@ function Blockchain() {
   useEffect(() => {
     async function fetchBlockchain() {
       try {
-        const data = await fetchBlocks();  // Fetch blockchain data (encrypted data)
-        setBlocks(data.chain || data);
+        const data = await fetchBlocks();
+        setBlocks(data.chain || data); // Fallback for array or { chain: [...] }
       } catch (error) {
         console.error('Error fetching blockchain:', error);
       }
@@ -19,24 +19,28 @@ function Blockchain() {
     fetchBlockchain();
   }, []);
 
-  // Secret Key for decryption
-  const secretKey = 'my-strong-secret-key';  // The same key used for encryption
+  const secretKey = 'my-strong-secret-key';
 
   return (
-    <div>
-      <h2>Blockchain View</h2>
-      <Link to="/add-property"><button>Add New Property</button></Link>
+    <div className="blockchain-container">
+      <div className="blockchain-header">
+        <h2>Blockchain View</h2>
+        <Link to="/add-property">
+          <button className="add-btn">Add New Property</button>
+        </Link>
+      </div>
+
       {blocks.map((block, index) => {
-        // Decrypt the data using the secret key
-        const decryptedData = decryptData(block.encryptedData, secretKey);  // Decrypt the data
+        const encrypted = block.encryptedData || block.data?.encryptedData || '';
+        const decryptedData = decryptData(encrypted, secretKey);
 
         return (
-          <div key={index} style={{ border: '1px solid black', margin: '10px', padding: '10px' }}>
-            <p><strong>Index:</strong> {block.index}</p>
-            <p><strong>Timestamp:</strong> {new Date(block.timestamp).toLocaleString()}</p>
-            <p><strong>Data:</strong> {JSON.stringify(decryptedData)}</p>  {/* Display Decrypted Data */}
-            <p><strong>Previous Hash:</strong> {block.previousHash}</p>
-            <p><strong>Hash:</strong> {block.hash}</p>
+          <div key={index} className="block-card">
+            <p><strong>Index:</strong> {block.index ?? 'N/A'}</p>
+            <p><strong>Timestamp:</strong> {block.timestamp ? new Date(block.timestamp).toLocaleString() : 'N/A'}</p>
+            <p><strong>Data:</strong> {decryptedData ? JSON.stringify(decryptedData) : 'N/A'}</p>
+            <p><strong>Previous Hash:</strong> {block.previousHash ?? block.previous_hash ?? 'N/A'}</p>
+            <p><strong>Hash:</strong> {block.hash ?? block.block_hash ?? 'N/A'}</p>
           </div>
         );
       })}
